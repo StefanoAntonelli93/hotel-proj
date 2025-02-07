@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
 
-
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
@@ -18,13 +18,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Product {
     @Id // id è la PK della tabella Product
-    private int id;
+    @Column(name = "PROD_ID") // Assicura che Hibernate usi la colonna corretta
+    private int Id;
     private String name;
-    private String desc;
+    private String description;
     private String brand;
     private BigDecimal price;
     private String category;
     private Date releaseDate;
     private Boolean available;
     private BigInteger quantity;
+    
 }
