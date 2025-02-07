@@ -21,7 +21,7 @@ public class ProductService {
         products.add(new Product(3, "Oppo", 450));
     }
 
-//creo metodi GET
+    // GET
     public List<Product> getProducts() { //prendo lista di dati in model/Products
         return products;
     }
@@ -33,8 +33,30 @@ public class ProductService {
                 .orElse(new Product(0, "No Items", 0));
     }
 
-// creo metodi POST
+    //  POST
     public void addProduct(Product prod) {
         products.add(prod);
     }
+
+    // PUT
+    public void updateProduct(Product prod) {
+        for (int i = 0; i < products.size(); i++) {
+            if (products.get(i).getProdId() == prod.getProdId()) {
+                products.set(i, prod); // Sostituisco l'elemento nella lista
+                break;
+            }
+        }
+    }
+
+    // DELETE
+    public void deleteProduct(int prodId) {
+        for (int i = 0; i < products.size(); i++) {
+            if (products.get(i).getProdId() == prodId) {
+                products.remove(prodId); //rimuovo prodotto dalla lista
+                break;
+            }
+        }
+
+    }
+
 }
