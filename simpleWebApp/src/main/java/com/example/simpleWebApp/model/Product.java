@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data // from lombok
-@AllArgsConstructor // create a constructor
+@AllArgsConstructor // create a constructor of all attributes
 @Entity // entità nel database
 public class Product {
 
