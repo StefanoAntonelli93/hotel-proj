@@ -1,6 +1,7 @@
 package com.example.ecom_proj.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.ecom_proj.model.Product;
@@ -19,20 +20,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
-
-
-
 @RestController
 @CrossOrigin // condivisione risorse con frontend CORS
 @RequestMapping("/api")
 public class ProductController {
-    
+
     @Autowired
     private ProductService service;
 
     @RequestMapping("/")
-    public String greet(){
+    public String greet() {
         return "Hello world, its me ,the controller.";
     }
 
@@ -40,17 +37,17 @@ public class ProductController {
     public List<Product> getAllProducts() {
         return service.getAllProducts();
     }
-    
-    @GetMapping("/products/{Id}") //non ritorna il dato ma la risposta
+
+    @GetMapping("/products/{Id}") // non ritorna il dato ma la risposta
     public ResponseEntity<Product> getProductById(@PathVariable int Id) {
 
-    Product product = service.getProductById(Id);
+        Product product = service.getProductById(Id);
 
-        if(product != null) 
+        if (product != null)
             return new ResponseEntity<>(product, HttpStatus.OK);
-        else 
+        else
             return new ResponseEntity<>(product, HttpStatus.NOT_FOUND);
-}
+    }
 
     @PostMapping("/products") // creo prodotto
     public void addProduct(@RequestBody Product prod) {
@@ -62,11 +59,19 @@ public class ProductController {
         service.updateProduct(prod);
     }
 
-    @DeleteMapping("/products/{Id}") //eleimino prodotto
+    @DeleteMapping("/products/{Id}") // eleimino prodotto
     public void deleteProduct(@PathVariable int Id) {
         service.deleteProduct(Id);
     }
-      
 
- 
+    // cercare nel database tramite keyword
+    // @GetMapping("/products/search")
+    // public ResponseEntity<List<Product>> searchProducts(@RequestParam String
+    // keyword) {
+
+    // List<Product> products = service.searchProducts(keyword);
+    // System.out.println("searching with " + keyword);
+    // return new ResponseEntity<>(products, HttpStatus.OK);
+    // }
+
 }

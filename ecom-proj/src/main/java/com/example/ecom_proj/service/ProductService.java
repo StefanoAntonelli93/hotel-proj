@@ -13,17 +13,18 @@ public class ProductService {
     @Autowired
     private ProductRepo repo;
 
-    //GET
-    public List<Product> getAllProducts(){ // metodo che ritorna tutti i prodotti
+    // GET
+    public List<Product> getAllProducts() { // metodo che ritorna tutti i prodotti
         return repo.findAll();
     }
 
-    public Product getProductById(int Id) { //prendo singolo elemento in lista di dati in model/Products
+    public Product getProductById(int Id) { // prendo singolo elemento in lista di dati in model/Products
         return repo.findById(Id)
-        .orElse(null);
+                .orElse(null);
     }
-       //  POST
-       public void addProduct(Product prod) {
+
+    // POST
+    public void addProduct(Product prod) {
         repo.save(prod);
     }
 
@@ -38,12 +39,10 @@ public class ProductService {
         repo.deleteById(Id);
 
     }
-              
-    
-   
-        
 
-
-
+    // // cercare tramite keyword
+    // public List<Product> searchProducts(String keyword) {
+    // return repo.searchProducts(keyword);
+    // }
 
 }
