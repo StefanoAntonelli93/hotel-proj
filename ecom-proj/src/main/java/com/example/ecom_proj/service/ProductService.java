@@ -20,7 +20,7 @@ public class ProductService {
 
     public Product getProductById(int Id) { //prendo singolo elemento in lista di dati in model/Products
         return repo.findById(Id)
-        .orElse(new Product());
+        .orElse(null);
     }
        //  POST
        public void addProduct(Product prod) {
