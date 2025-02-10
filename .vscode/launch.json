@@ -19,6 +19,16 @@
       "projectName": "myApp",
       "args": "",
       "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "Spring Boot-SpringSecurityApplication<SpringSecurity>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.example.SpringSecurity.SpringSecurityApplication",
+      "projectName": "SpringSecurity",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
     }
   ]
 }
