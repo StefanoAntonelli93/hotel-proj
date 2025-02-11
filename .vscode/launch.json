@@ -2,31 +2,11 @@
   "configurations": [
     {
       "type": "java",
-      "name": "Spring Boot-DemoApplication<demo>",
+      "name": "Spring Boot-HotelProjApplication<hotel-proj>",
       "request": "launch",
       "cwd": "${workspaceFolder}",
-      "mainClass": "com.example.demo.DemoApplication",
-      "projectName": "demo",
-      "args": "",
-      "envFile": "${workspaceFolder}/.env"
-    },
-    {
-      "type": "java",
-      "name": "Spring Boot-MyAppApplication<myApp>",
-      "request": "launch",
-      "cwd": "${workspaceFolder}",
-      "mainClass": "com.example.myApp.MyAppApplication",
-      "projectName": "myApp",
-      "args": "",
-      "envFile": "${workspaceFolder}/.env"
-    },
-    {
-      "type": "java",
-      "name": "Spring Boot-SpringSecurityApplication<SpringSecurity>",
-      "request": "launch",
-      "cwd": "${workspaceFolder}",
-      "mainClass": "com.example.SpringSecurity.SpringSecurityApplication",
-      "projectName": "SpringSecurity",
+      "mainClass": "com.example.hotel_proj.HotelProjApplication",
+      "projectName": "hotel-proj",
       "args": "",
       "envFile": "${workspaceFolder}/.env"
     }
