@@ -12,8 +12,15 @@ import com.example.hotel_proj.repo.RoomRepository;
 public class RoomService {
     private final RoomRepository repository;
 
+    // autowiring constructor
     public RoomService(@Autowired RoomRepository repository) {
         this.repository = repository;
+    }
+
+    // create room
+    public Room createRoom(String floor, String number, boolean isSuite) {
+        Room room = new Room(floor, number, isSuite);
+        return repository.save(room);
     }
 
     public List<Room> getAllRoom() {
