@@ -30,6 +30,9 @@ public class Room {
 
     }
 
+    public Room() {
+    }
+
     // getter setter
     public String getId() {
         return id;

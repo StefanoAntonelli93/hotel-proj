@@ -25,7 +25,7 @@ public class RoomService {
 
     }
 
-    public List<Room> getAllRoom() {
+    public List<Room> getAllRooms() {
         return repository.findAll();
     }
 }
