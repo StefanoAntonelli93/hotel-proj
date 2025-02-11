@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 @Entity
 // @Data
@@ -16,6 +18,8 @@ public class Room {
     // @Pattern(regexp = "\\d{6}", message = "L'ID deve essere esattamente di 6
     // cifre") // id 6 cifre
     @Id
+    @Size(min = 6, max = 6, message = "ID must be excatly 6 characters")
+    @Pattern(regexp = "\\w{6}", message = "ID must be contains 6 characters")
     private String id;
     private String floor;
     private String number;
@@ -70,14 +74,38 @@ public class Room {
     @PrePersist
     public void generateId() {
         if (this.id == null) {
-            this.id = "F" + floor + "N" + number;
-            System.out.println("Generated ID: " + this.id);
+            if (isSuite == true) {
+                this.id = "S" + floor + number;
+
+                while (this.id.length() < 6) { // aggiungo 0 fino ad arrivare a 6
+                    this.id += "0";
+                }
+                if (this.id.length() > 6) {
+                    throw new IllegalArgumentException(
+                            "Error: ID '" + this.id + "' exceed the six characters allowed!"); // lancio eccezione
+                }
+                // this.id = this.id.substring(0, 6);// se maggiore di 6 tolgo
+                System.out.println("Generated ID: " + this.id);
+            } else {
+                this.id = "N" + floor + number;
+
+                while (this.id.length() < 6) { // aggiungo 0 fino ad arrivare a 6
+                    this.id += "0";
+                }
+                if (this.id.length() > 6) {
+                    throw new IllegalArgumentException(
+                            "Error: ID '" + this.id + "' exceed the six characters allowed!");
+                }
+                // this.id = this.id.substring(0, 6);// se maggiore di 6 tolgo
+                System.out.println("Generated ID: " + this.id);
+            }
+
         }
     }
 
     // to string convertion
     @Override
     public String toString() {
-        return "People [id=" + id + ", floor=" + floor + ", number=" + number + ",isSuite" + isSuite + "]";
+        return "People [id=" + id + ", floor=" + floor + ", number=" + number + ", isSuite" + isSuite + "]";
     }
 }
