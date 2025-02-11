@@ -20,7 +20,9 @@ public class RoomService {
     // create room
     public Room createRoom(String floor, String number, boolean isSuite) {
         Room room = new Room(floor, number, isSuite);
+        System.out.println("Creating room: " + room);
         return repository.save(room);
+
     }
 
     public List<Room> getAllRoom() {
