@@ -26,7 +26,7 @@ public class RoomController {
     }
 
     @GetMapping("/hotel/rooms/create")
-    public Room createRoom(@RequestParam String floor, @RequestParam String number, @RequestParam boolean isSuite) {
+    public Room createRoom(@RequestParam Integer floor, @RequestParam Integer number, @RequestParam boolean isSuite) {
         return service.createRoom(floor, number, isSuite);
     }
 

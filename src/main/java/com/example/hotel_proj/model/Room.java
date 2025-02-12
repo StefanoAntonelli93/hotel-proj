@@ -1,11 +1,17 @@
 package com.example.hotel_proj.model;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+import org.hibernate.annotations.IdGeneratorType;
+import org.hibernate.engine.spi.SharedSessionContractImplementor;
+import org.hibernate.id.IdentifierGenerator;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 
 @Entity
 // @Data
@@ -14,30 +20,60 @@ import jakarta.validation.constraints.Size;
 @Table(name = "room")
 public class Room {
 
-    // @Column(name = "id", nullable = false, length = 6)
-    // @Pattern(regexp = "\\d{6}", message = "L'ID deve essere esattamente di 6
-    // cifre") // id 6 cifre
+    // GENERATOR ID
+    static class RoomIdGenerator implements IdentifierGenerator {
+
+        @Override
+        public Object generate(SharedSessionContractImplementor session, Object object) {
+            if (!(object instanceof Room room)) {
+                throw new IllegalArgumentException(object + "is not an instance of room"); // se non è istanza di room
+                                                                                           // lancia eccezione
+            }
+
+            String prefix = room.getIsSuite() ? "S" : "N";
+
+            Integer floor = room.getFloor();
+            if (floor >= 100) {
+                throw new IllegalArgumentException("Floor number cannot exceed 2 digits");
+            }
+            String floorStr = (floor < 100) ? String.format("%03d", floor) : floor.toString(); // int non può avere zero
+                                                                                               // davanti
+
+            Integer number = room.getNumber();
+            if (number >= 1000) {
+                throw new IllegalArgumentException("Room number cannot exceed 3 digits");
+            }
+            String numberStr = (number < 10) ? String.format("%02d", number) : number.toString();
+
+            return prefix + floorStr + numberStr; // stringa composta da "S/N + floor + number"
+        }
+    }
+
+    @IdGeneratorType(RoomIdGenerator.class)
+    @Target({ ElementType.METHOD, ElementType.FIELD })
+    @Retention(RetentionPolicy.RUNTIME)
+    public @interface RoomIdGenerated {
+    }
+
     @Id
-    @Size(min = 6, max = 6, message = "ID must be excatly 6 characters")
-    @Pattern(regexp = "\\w{6}", message = "ID must be contains 6 characters")
+    @RoomIdGenerated // richiamo interfaccia
     private String id;
-    private String floor;
-    private String number;
+    private Integer floor;
+    private Integer number;
     private boolean isSuite;
 
-    // costructor
-    public Room(String floor, String number, boolean isSuite) {
-
+    // CONSTRUCTOR
+    public Room(Integer floor, Integer number, boolean isSuite) {
         this.floor = floor;
         this.number = number;
         this.isSuite = isSuite;
-
     }
 
+    // NO ARGS CONSTRUCTOR
     public Room() {
     }
 
-    // getter setter
+    // GETTER SETTER
     public String getId() {
         return id;
     }
@@ -46,19 +82,19 @@ public class Room {
         this.id = id;
     }
 
-    public String getNumber() {
+    public Integer getNumber() {
         return number;
     }
 
-    public void setNumber(String number) {
+    public void setNumber(Integer number) {
         this.number = number;
     }
 
-    public String getFloor() {
+    public Integer getFloor() {
         return floor;
     }
 
-    public void setFloor(String floor) {
+    public void setFloor(Integer floor) {
         this.floor = floor;
     }
 
@@ -68,39 +104,6 @@ public class Room {
 
     public void setIsSuite(boolean isSuite) {
         this.isSuite = isSuite;
-    }
-
-    // genero id prima di persistere l'oggettos
-    @PrePersist
-    public void generateId() {
-        if (this.id == null) {
-            if (isSuite == true) {
-                this.id = "S" + floor + number;
-
-                while (this.id.length() < 6) { // aggiungo 0 fino ad arrivare a 6
-                    this.id += "0";
-                }
-                if (this.id.length() > 6) {
-                    throw new IllegalArgumentException(
-                            "Error: ID '" + this.id + "' exceed the six characters allowed!"); // lancio eccezione
-                }
-                // this.id = this.id.substring(0, 6);// se maggiore di 6 tolgo
-                System.out.println("Generated ID: " + this.id);
-            } else {
-                this.id = "N" + floor + number;
-
-                while (this.id.length() < 6) { // aggiungo 0 fino ad arrivare a 6
-                    this.id += "0";
-                }
-                if (this.id.length() > 6) {
-                    throw new IllegalArgumentException(
-                            "Error: ID '" + this.id + "' exceed the six characters allowed!");
-                }
-                // this.id = this.id.substring(0, 6);// se maggiore di 6 tolgo
-                System.out.println("Generated ID: " + this.id);
-            }
-
-        }
     }
 
     // to string convertion
