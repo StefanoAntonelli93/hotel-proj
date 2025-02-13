@@ -28,4 +28,22 @@ public class RoomService {
     public List<Room> getAllRooms() {
         return repository.findAll();
     }
+
+    public Room getRoomById(String id) {
+        return repository.findById(id)
+                .orElse(null);
+    }
+
+    public void addRoom(Room room) {
+        repository.save(room);
+    }
+
+    public void updateRoom(Room room) {
+        repository.save(room);
+    }
+
+    public boolean deleteRoom(String id) {
+        repository.deleteById(id);
+        return true;
+    }
 }
