@@ -11,15 +11,18 @@ import com.example.hotel_proj.repo.RoomRepository;
 @Service
 public class RoomService {
     private final RoomRepository repository;
+    private final RoomIdGeneratorService idGeneratorService;
 
-    // autowiring constructor
-    public RoomService(@Autowired RoomRepository repository) {
+    @Autowired
+    public RoomService(RoomRepository repository, RoomIdGeneratorService idGeneratorService) {
         this.repository = repository;
+        this.idGeneratorService = idGeneratorService;
     }
 
     // create room
     public Room createRoom(Integer floor, Integer number, boolean isSuite) {
         Room room = new Room(floor, number, isSuite);
+        room.setId(idGeneratorService.generateRoomId(room)); // generate id
         System.out.println("Creating room: " + room);
         return repository.save(room);
 
@@ -46,4 +49,5 @@ public class RoomService {
         repository.deleteById(id);
         return true;
     }
+
 }
