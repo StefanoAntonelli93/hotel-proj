@@ -36,14 +36,14 @@ public class Room {
             if (floor >= 100) {
                 throw new IllegalArgumentException("Floor number cannot exceed 2 digits");
             }
-            String floorStr = (floor < 100) ? String.format("%03d", floor) : floor.toString(); // int non può avere zero
-                                                                                               // davanti
+            String floorStr = (floor < 10) ? String.format("%02d", floor) : floor.toString(); // int non può avere zero
+                                                                                              // davanti
 
             Integer number = room.getNumber();
             if (number >= 1000) {
                 throw new IllegalArgumentException("Room number cannot exceed 3 digits");
             }
-            String numberStr = (number < 10) ? String.format("%02d", number) : number.toString();
+            String numberStr = (number < 100) ? String.format("%03d", number) : number.toString();
 
             return prefix + floorStr + numberStr; // stringa composta da "S/N + floor + number"
         }
