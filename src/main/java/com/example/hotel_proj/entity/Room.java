@@ -1,6 +1,4 @@
-package com.example.hotel_proj.model;
-
-
+package com.example.hotel_proj.entity;
 
 import jakarta.persistence.*;
 

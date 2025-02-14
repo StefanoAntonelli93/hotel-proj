@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.hotel_proj.model.Room;
+import com.example.hotel_proj.entity.Room;
 import com.example.hotel_proj.service.RoomService;
 
 @RestController

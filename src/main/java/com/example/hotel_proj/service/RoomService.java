@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.hotel_proj.model.Room;
+import com.example.hotel_proj.entity.Room;
 import com.example.hotel_proj.repo.RoomRepository;
 
 @Service
@@ -23,7 +23,6 @@ public class RoomService {
     public Room createRoom(Integer floor, Integer number, boolean isSuite) {
         Room room = new Room(floor, number, isSuite);
         room.setId(idGeneratorService.generateRoomId(room)); // generate id
-        System.out.println("Creating room: " + room);
         return repository.save(room);
 
     }

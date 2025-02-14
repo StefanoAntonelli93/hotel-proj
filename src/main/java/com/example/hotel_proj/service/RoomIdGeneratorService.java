@@ -1,6 +1,6 @@
 package com.example.hotel_proj.service;
 
-import com.example.hotel_proj.model.Room;
+import com.example.hotel_proj.entity.Room;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
