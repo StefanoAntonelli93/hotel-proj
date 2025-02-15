@@ -24,10 +24,9 @@ public class Room {
 
     public Room() {
     }
-
-    // relation with reservation
-    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "room")
     private List<Reservation> reservations;
+
 
     // GETTER E SETTER
     public String getId() {
@@ -68,11 +67,4 @@ public class Room {
     }
 
 
-    public List<Reservation> getReservations() {
-        return reservations;
-    }
-
-    public void setReservations(List<Reservation> reservations) {
-        this.reservations = reservations;
-    }
 }
