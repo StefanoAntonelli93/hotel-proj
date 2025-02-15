@@ -42,7 +42,7 @@ public class UserController {
     @PostMapping("/users")
     public ResponseEntity<User> addRoom(@RequestBody User user) {
         service.addUser(user);
-        return (user != null) ? new ResponseEntity<>(user, HttpStatus.CREATED)
+        return (user != null) ? new ResponseEntity<>(user, HttpStatus.OK)
                 : new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
     @PutMapping("/users")
