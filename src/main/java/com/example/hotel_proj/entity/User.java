@@ -2,8 +2,6 @@ package com.example.hotel_proj.entity;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
-
 @Entity
 @Table(name = "users")
 
