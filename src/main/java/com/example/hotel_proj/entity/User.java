@@ -2,6 +2,8 @@ package com.example.hotel_proj.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "users")
 
@@ -12,16 +14,17 @@ public class User {
     private Long id;
 
     @Column(nullable = false, unique = true, length = 100)
-
     private String username;
 
     @Column(nullable = false)
-
     private String password;
 
     @Column(nullable = false, unique = true, length = 100)
-
     private String email;
+
+    // relation with reservation
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Reservation> reservations;
 
     // manual constructor, @Lombok not work
     public User(String username, String password, String email) {
@@ -54,5 +57,13 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public List<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
     }
 }

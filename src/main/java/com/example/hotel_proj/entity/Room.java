@@ -2,6 +2,8 @@ package com.example.hotel_proj.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "room")
 public class Room {
@@ -13,16 +15,19 @@ public class Room {
     private Integer number;
     private boolean isSuite;
 
-    // COSTRUTTORE
+
     public Room(Integer floor, Integer number, boolean isSuite) {
         this.floor = floor;
         this.number = number;
         this.isSuite = isSuite;
     }
 
-    // COSTRUTTORE SENZA ARGOMENTI
     public Room() {
     }
+
+    // relation with reservation
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
+    private List<Reservation> reservations;
 
     // GETTER E SETTER
     public String getId() {
@@ -60,5 +65,14 @@ public class Room {
     @Override
     public String toString() {
         return "Room [id=" + id + ", floor=" + floor + ", number=" + number + ", isSuite=" + isSuite + "]";
+    }
+
+
+    public List<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
     }
 }
