@@ -13,8 +13,8 @@ public class RoomService {
     private final RoomRepository repository;
     private final RoomIdGeneratorService idGeneratorService;
 
-    @Autowired
-    public RoomService(RoomRepository repository, RoomIdGeneratorService idGeneratorService) {
+
+    public RoomService(@Autowired RoomRepository repository, RoomIdGeneratorService idGeneratorService) {
         this.repository = repository;
         this.idGeneratorService = idGeneratorService;
     }

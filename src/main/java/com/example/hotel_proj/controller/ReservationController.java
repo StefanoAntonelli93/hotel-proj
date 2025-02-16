@@ -1,7 +1,7 @@
 package com.example.hotel_proj.controller;
 
 import com.example.hotel_proj.entity.Reservation;
-import com.example.hotel_proj.entity.Room;
+
 import com.example.hotel_proj.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +30,6 @@ public class ReservationController {
         try {
             LocalDate checkinDate = LocalDate.parse(checkin);
             LocalDate checkoutDate = LocalDate.parse(checkout);
-            System.out.println("Parsed checkin: " + checkinDate + ", checkout: " + checkoutDate);
             return service.createReservation(userId, roomId, checkinDate, checkoutDate, status);
         } catch (Exception e) {
             throw new IllegalArgumentException("Invalid date format: " + e.getMessage());

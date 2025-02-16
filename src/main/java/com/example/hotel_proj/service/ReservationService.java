@@ -18,39 +18,35 @@ public class ReservationService {
 
 
     private final ReservationRepository repository;
+    private final UserRepository userRepository;
+    private final RoomRepository roomRepository;
 
-    public ReservationService(@Autowired  ReservationRepository repository) {
+    public ReservationService(@Autowired  ReservationRepository repository, UserRepository userRepository, RoomRepository roomRepository) {
         this.repository = repository;
+        this.userRepository = userRepository;
+        this.roomRepository = roomRepository;
     }
 
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private RoomRepository roomRepository;
-
-
     public Reservation createReservation(Long userId, String roomId, LocalDate checkin, LocalDate checkout, String status) {
-        // Recupera l'utente dal database
+        // find user
         Optional<User> userOpt = userRepository.findById(userId);
-
-        if (checkin == null || checkout == null) {
-            throw new IllegalArgumentException("Check-in e check-out non possono essere nulli");
-        }
-
         if (userOpt.isEmpty()) {
             throw new IllegalArgumentException("User not found");
         }
         User user = userOpt.get();
 
-        // Recupera la stanza dal database
+        //find room
         Optional<Room> roomOpt = roomRepository.findById(roomId);
         if (roomOpt.isEmpty()) {
             throw new IllegalArgumentException("Room not found");
         }
         Room room = roomOpt.get();
 
-        // Crea una nuova prenotazione
+        if (checkin == null || checkout == null) {
+            throw new IllegalArgumentException("Check-in and check-out cannot be null");
+        }
+
+        // new reservation
         Reservation reservation = new Reservation();
         reservation.setUser(user);
         reservation.setRoom(room);
@@ -58,7 +54,6 @@ public class ReservationService {
         reservation.setCheckout(checkout);
         reservation.setStatus(status);
 
-        // Salva la prenotazione nel database
         return repository.save(reservation);
     }
     public List<Reservation> getAllReservations() {

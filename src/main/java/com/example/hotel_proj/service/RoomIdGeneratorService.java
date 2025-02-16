@@ -55,6 +55,6 @@ public class RoomIdGeneratorService {
         int nextNumber = (lastNumbId == null) ? 1 : lastNumbId + 1;
         String numberStr = String.format("%03d", nextNumber);
 
-        return prefix + floorStr + numberStr;
+        return prefix + floorStr + numberStr; //id room
     }
 }
