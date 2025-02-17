@@ -21,7 +21,7 @@ public class ReservationService {
     private final UserRepository userRepository;
     private final RoomRepository roomRepository;
 
-    public ReservationService(@Autowired  ReservationRepository repository, UserRepository userRepository, RoomRepository roomRepository) {
+    public ReservationService(@Autowired ReservationRepository repository, UserRepository userRepository, RoomRepository roomRepository) {
         this.repository = repository;
         this.userRepository = userRepository;
         this.roomRepository = roomRepository;
@@ -56,8 +56,17 @@ public class ReservationService {
 
         return repository.save(reservation);
     }
+
     public List<Reservation> getAllReservations() {
         return repository.findAll();
     }
 
+    public Optional<Reservation> findByUsername(String username) {
+        return repository.findByUser_Username(username);
+    }
+
+    public List<Reservation> findReservationsByPeriod(LocalDate checkin, LocalDate checkout) {
+        return repository.findByCheckinBeforeAndCheckoutAfter(checkout, checkin);
+
+    }
 }
