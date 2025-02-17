@@ -3,6 +3,8 @@ package com.example.hotel_proj.controller;
 import com.example.hotel_proj.entity.Reservation;
 
 import com.example.hotel_proj.service.ReservationService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -22,14 +24,16 @@ public class ReservationController {
         this.service = service;
     }
 
+    // logger
+    private static final Logger logger = LoggerFactory.getLogger(ReservationController.class);
+
     @PostMapping("/reservations/create")
     public Reservation createReservation(@RequestParam Long userId,
                                          @RequestParam String roomId,
                                          @RequestParam String checkin,
                                          @RequestParam String checkout,
                                          @RequestParam String status) {
-        System.out.println("Received parameters: userId=" + userId + ", roomId=" + roomId +
-                ", checkin=" + checkin + ", checkout=" + checkout + ", status=" + status);
+        logger.info("Received parameters: userId= {} / roomID= {} / checkin= {} / checkout= {} / status= {}", userId, roomId, checkin, checkout, status);
 
         try {
             LocalDate checkinDate = LocalDate.parse(checkin);
@@ -61,11 +65,11 @@ public class ReservationController {
 
         List<Reservation> reservations = service.findReservationsByPeriod(checkin, checkout);
         if (reservations.isEmpty()) {
-            System.out.println("reservation in date: " + checkin + " / " + checkout + " not found!");
+            logger.warn("Reservation in date: {} / {} not found!", checkin, checkout);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         }
-        System.out.println("reservation in date: " + checkin + " / " + checkout + " found!");
+        logger.info("Reservation in date: {} / {} found!", checkin, checkout);
         return new ResponseEntity<>(reservations, HttpStatus.OK);
 
     }
