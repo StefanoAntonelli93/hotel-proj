@@ -74,5 +74,28 @@ public class ReservationController {
 
     }
 
+    @PostMapping("/reservations")
+    public ResponseEntity<Reservation> addReservation(@RequestBody Reservation reservation) {
+        service.addReservation(reservation);
+        return (reservation != null) ? new ResponseEntity<>(reservation, HttpStatus.OK)
+                : new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    }
+
+    @PutMapping("/reservations")
+    public ResponseEntity<Reservation> updateReservation(@RequestBody Reservation reservation) {
+        service.updateReservation(reservation);
+        return (reservation != null) ? new ResponseEntity<>(reservation, HttpStatus.OK)
+                : new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    }
+
+    @DeleteMapping("/reservations/{id}")
+    public ResponseEntity<String> deleteRoom(@PathVariable Long id) {
+        boolean deleted = service.deleteReservation(id);
+        if (deleted) {
+            return new ResponseEntity<>("Reservation deleted successfully", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Reservation not found", HttpStatus.NOT_FOUND);
+        }
+    }
 }
 

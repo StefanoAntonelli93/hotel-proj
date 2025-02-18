@@ -59,7 +59,7 @@ public class RoomController {
     @PutMapping("/rooms")
     public ResponseEntity<Room> updateRoom(@RequestBody Room room) {
         service.updateRoom(room);
-        return (room != null) ? new ResponseEntity<>(room, HttpStatus.ACCEPTED)
+        return (room != null) ? new ResponseEntity<>(room, HttpStatus.OK)
                 : new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 

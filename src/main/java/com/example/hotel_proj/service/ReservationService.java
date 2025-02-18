@@ -69,4 +69,17 @@ public class ReservationService {
         return repository.findByCheckinBeforeAndCheckoutAfter(checkout, checkin);
 
     }
+    public void addReservation(Reservation reservation){
+        repository.save(reservation);
+    }
+    public void updateReservation(Reservation reservation){
+        repository.save(reservation);
+    }
+    public boolean deleteReservation(Long id){
+    if(repository.existsById(id)){
+        repository.deleteById(id);
+        return true;
+    }
+    return false;
+    }
 }
