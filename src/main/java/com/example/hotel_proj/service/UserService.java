@@ -16,34 +16,24 @@ public class UserService {
         this.repository = repository;
     }
 
-    public User createUser(String username, String password, String email) {
-        User user = new User(username, password,email);
-        return repository.save(user);
-    }
-
-    public List<User> getAllUsers(){
+    public List<User> getAllUsers() {
         return repository.findAll();
     }
-    public Optional<User> getUserId(Long id){
+
+    public Optional<User> getUserId(Long id) {
         return repository.findById(id);
 
     }
-    public Optional<User> getUserName(String username){
+
+    public Optional<User> getUserName(String username) {
         return repository.findByUsername(username);
     }
-    public void addUser(User user){
+
+    public void addUser(User user) {
         repository.save(user);
     }
-    public void updateUser(User user){
-        repository.save(user);
-    }
-    public boolean deleteUser(Long id){
-        if (repository.existsById(id)) {
-            repository.deleteById(id);
-            return true;
-        }
-        return false;
-    }
 
-
+    public void deleteUser(Long id) {
+        repository.deleteById(id);
+    }
 }

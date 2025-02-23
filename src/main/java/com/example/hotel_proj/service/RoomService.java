@@ -13,18 +13,9 @@ public class RoomService {
     private final RoomRepository repository;
     private final RoomIdGeneratorService idGeneratorService;
 
-
     public RoomService(@Autowired RoomRepository repository, RoomIdGeneratorService idGeneratorService) {
         this.repository = repository;
         this.idGeneratorService = idGeneratorService;
-    }
-
-    // create room
-    public Room createRoom(Integer floor, Integer number, boolean isSuite) {
-        Room room = new Room(floor, number, isSuite);
-        room.setId(idGeneratorService.generateRoomId(room)); // generate id
-        return repository.save(room);
-
     }
 
     public List<Room> getAllRooms() {
@@ -37,16 +28,12 @@ public class RoomService {
     }
 
     public void addRoom(Room room) {
+        room.setId(idGeneratorService.generateRoomId(room));
         repository.save(room);
     }
 
-    public void updateRoom(Room room) {
-        repository.save(room);
-    }
-
-    public boolean deleteRoom(String id) {
+    public void deleteRoom(String id) {
         repository.deleteById(id);
-        return true;
     }
 
 }

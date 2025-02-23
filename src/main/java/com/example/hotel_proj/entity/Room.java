@@ -1,6 +1,7 @@
 package com.example.hotel_proj.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 
 import java.util.List;
 
@@ -24,6 +25,7 @@ public class Room {
 
     public Room() {
     }
+
     @OneToMany(mappedBy = "room")
     private List<Reservation> reservations;
 

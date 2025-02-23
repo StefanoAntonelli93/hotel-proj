@@ -26,26 +26,7 @@ public class ReservationController {
 
     // logger
     private static final Logger logger = LoggerFactory.getLogger(ReservationController.class);
-
-    @PostMapping("/reservations/create")
-    public Reservation createReservation(@RequestParam Long userId,
-                                         @RequestParam String roomId,
-                                         @RequestParam String checkin,
-                                         @RequestParam String checkout,
-                                         @RequestParam String status) {
-        logger.info("Received parameters: userId= {} / roomID= {} / checkin= {} / checkout= {} / status= {}", userId, roomId, checkin, checkout, status);
-
-        try {
-            LocalDate checkinDate = LocalDate.parse(checkin);
-            LocalDate checkoutDate = LocalDate.parse(checkout);
-            return service.createReservation(userId, roomId, checkinDate, checkoutDate, status);
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Invalid date format: " + e.getMessage());
-        }
-
-
-    }
-
+    
     @GetMapping("/reservations")
     public List<Reservation> getAllReservations() { // get
         return service.getAllReservations();
@@ -74,28 +55,17 @@ public class ReservationController {
 
     }
 
-    @PostMapping("/reservations")
+    @PostMapping("/reservations/create")
     public ResponseEntity<Reservation> addReservation(@RequestBody Reservation reservation) {
         service.addReservation(reservation);
         return (reservation != null) ? new ResponseEntity<>(reservation, HttpStatus.OK)
                 : new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping("/reservations")
-    public ResponseEntity<Reservation> updateReservation(@RequestBody Reservation reservation) {
-        service.updateReservation(reservation);
-        return (reservation != null) ? new ResponseEntity<>(reservation, HttpStatus.OK)
-                : new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-    }
-
     @DeleteMapping("/reservations/{id}")
-    public ResponseEntity<String> deleteRoom(@PathVariable Long id) {
-        boolean deleted = service.deleteReservation(id);
-        if (deleted) {
-            return new ResponseEntity<>("Reservation deleted successfully", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("Reservation not found", HttpStatus.NOT_FOUND);
-        }
+    public void deleteRoom(@PathVariable Long id) {
+        service.deleteReservation(id);
+
     }
 }
 
